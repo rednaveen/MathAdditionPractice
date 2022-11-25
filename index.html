@@ -48,6 +48,7 @@ function verify()
 	var tobeVerified=parseInt(document.getElementById("sum").value);
 	if(tobeVerified==sum) {
     	alert("Correct Answer");
+        newSum();
     }
     else {
     	alert('Wrong answer');
@@ -89,7 +90,8 @@ randomizeNumbers();
 drawInCanvas();
 document.getElementById("sum").focus();
 </script>
-<br>
+
+
 <input id='sum' onkeyup="move_cursor_to_left(this)" autofocus/><br>
 <button id='bNew' onclick="newSum()">New</button> 
 <button id='bVerify' onclick="verify()">Verify</button> 
