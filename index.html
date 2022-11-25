@@ -8,7 +8,9 @@
     input {
         width: 150px;
         display: block;
-		direction: ltr;
+        text-align:right;
+        font-size: 24px; 
+        font-family: monospace;
     }
     </style>
 <canvas id="myCanvas" width="200" height="132" style="border:1px solid #d3d3d3;">
@@ -32,6 +34,8 @@ function newSum()
 {
 	randomizeNumbers();
     drawInCanvas();
+    document.getElementById("sum").value="";
+    document.getElementById("sum").focus();
 }
 
 function clearCanvas(ctx)
@@ -45,8 +49,17 @@ function verify()
 	if(tobeVerified==sum) {
     	alert("Correct Answer");
     }
+    else {
+    	alert('Wrong answer');
+    }
 }
 
+function move_cursor_to_left(e)
+{
+//alert(e.value);
+e.setSelectionRange(0, 0);
+e.focus();
+}
 
 function drawInCanvas()
 {
@@ -74,9 +87,10 @@ function drawInCanvas()
 }
 randomizeNumbers();
 drawInCanvas();
+document.getElementById("sum").focus();
 </script>
 <br>
-<input id='sum' /><br>
+<input id='sum' onkeyup="move_cursor_to_left(this)" autofocus/><br>
 <button id='bNew' onclick="newSum()">New</button> 
 <button id='bVerify' onclick="verify()">Verify</button> 
 </body>
