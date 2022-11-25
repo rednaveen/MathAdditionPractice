@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<canvas id="myCanvas" width="200" height="132" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.</canvas>
+
+<script>
+var num1=0;
+var num2=0;
+var sum=0;
+function getRandom()
+{
+	return Math.floor(Math.random()*(999-100+1)+100);
+}
+function randomizeNumbers()
+{
+	num1= getRandom();
+    num2= getRandom();
+    sum=num1+num2;
+}
+function newSum()
+{
+	randomizeNumbers();
+    drawInCanvas();
+}
+function verify();
+{
+	var tobeVerified=parseInt(document.getElementById("bVerify").value);
+	if(tobeVerified==sum) {
+    	alert("Correct Answer");
+    }
+}
+function clearCanvas(ctx)
+{
+	ctx.clearRect(0, 0, 120, 120);
+}
+function drawInCanvas()
+{
+  var c = document.getElementById("myCanvas");
+  var ctx = c.getContext("2d");
+  //clearCanvas(ctx);
+  // Create a red line in position 150
+  ctx.strokeStyle = "black";
+  //ctx.moveTo(155, 20);
+  //ctx.lineTo(155, 170);
+  //ctx.stroke();
+
+  ctx.font = "30px Arial";    
+
+  // Show the different textAlign values
+  ctx.textAlign = "end";      
+  ctx.fillText(num1, 150, 80);     
+  ctx.fillText("+"+num2, 150, 120);  
+
+
+  ctx.strokeStyle = "black";
+  ctx.moveTo(0, 130);
+  ctx.lineTo(155, 130);
+  ctx.stroke();
+}
+randomizeNumbers();
+drawInCanvas();
+</script>
+<br>
+<input id='sum' /><br>
+<button id='bNew' onclick="newSum()">New</button> 
+<button id='bVerify' onclick="verify()">Verify</button> 
+</body>
+</html>
