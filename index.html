@@ -1,7 +1,16 @@
 <!DOCTYPE html>
 <html>
 <body>
-
+    <style type="text/css">
+    form {
+        text-align: right;
+    }
+    input {
+        width: 150px;
+        display: block;
+		direction: ltr;
+    }
+    </style>
 <canvas id="myCanvas" width="200" height="132" style="border:1px solid #d3d3d3;">
 Your browser does not support the HTML5 canvas tag.</canvas>
 
@@ -24,22 +33,26 @@ function newSum()
 	randomizeNumbers();
     drawInCanvas();
 }
-function verify();
+
+function clearCanvas(ctx)
 {
-	var tobeVerified=parseInt(document.getElementById("bVerify").value);
+	ctx.clearRect(0, 0, 200, 132);
+}
+
+function verify()
+{
+	var tobeVerified=parseInt(document.getElementById("sum").value);
 	if(tobeVerified==sum) {
     	alert("Correct Answer");
     }
 }
-function clearCanvas(ctx)
-{
-	ctx.clearRect(0, 0, 120, 120);
-}
+
+
 function drawInCanvas()
 {
   var c = document.getElementById("myCanvas");
   var ctx = c.getContext("2d");
-  //clearCanvas(ctx);
+  clearCanvas(ctx);
   // Create a red line in position 150
   ctx.strokeStyle = "black";
   //ctx.moveTo(155, 20);
