@@ -20,18 +20,25 @@ Your browser does not support the HTML5 canvas tag.</canvas>
 var num1=0;
 var num2=0;
 var sum=0;
+var diff=0;
 
-
+var subtraction=1;
 
 function getRandom()
 {
-	return Math.floor(Math.random()*(9999-100+1)+1000);
+	return Math.floor(Math.random()*(999999-100+1)+100000);
 }
 function randomizeNumbers()
 {
 	num1= getRandom();
     num2= getRandom();
+    if(num1 < num2) {
+        var temp=num1;
+        num1=num2;
+        num2=temp;
+    }
     sum=num1+num2;
+    diff=num1-num2;
 }
 function newSum()
 {
@@ -49,12 +56,18 @@ function clearCanvas(ctx)
 function verify()
 {
     drawInCanvas();
+    var optype=document.querySelector('input[name = "gender"]:checked').value;
     var correctImg = document.getElementById("correct");
     var wrongImg = document.getElementById("wrong");
 	var tobeVerified=parseInt(document.getElementById("sum").value);
     var ctx = get_canvas_ctx();
     ctx.globalAlpha = 0.5;
-	if(tobeVerified==sum) {
+    var result=sum;
+    if(subtraction) {
+        result=diff;
+    }
+
+	if(tobeVerified==result) {
         ctx.drawImage(correctImg, 0, 0,100,100);
     	//alert("Correct Answer");
         setTimeout(function(){/*YourCode*/newSum();},2000);       
@@ -68,6 +81,9 @@ function verify()
 function move_cursor_to_left(e)
 {
 //alert(e.value);
+if (event.key === "Enter") {
+    verify();
+}
 e.setSelectionRange(0, 0);
 e.focus();
 }
@@ -99,8 +115,14 @@ function drawInCanvas()
 
   // Show the different textAlign values
   ctx.textAlign = "end";      
-  ctx.fillText(num1, 150, 80);     
-  ctx.fillText("+"+num2, 150, 120);  
+  ctx.fillText(num1, 150, 80);  
+
+  if(subtraction) {   
+  ctx.fillText("-"+num2, 150, 120);  
+  }
+  else {
+    ctx.fillText("+"+num2, 150, 120);  
+  }
 
 
   ctx.strokeStyle = "black";
@@ -113,13 +135,16 @@ drawInCanvas();
 document.getElementById("sum").focus();
 </script>
 
-
 <input id='sum' onkeyup="move_cursor_to_left(this)" autofocus/><br>
 <button id='bNew' onclick="newSum()">New</button> 
 <button id='bVerify' onclick="verify()">Verify</button> 
 
 <img id="correct" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Eo_circle_green_checkmark.svg/240px-Eo_circle_green_checkmark.svg.png"  style="display: none;"/>
 <img id="wrong" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Flat_cross_icon.svg/240px-Flat_cross_icon.svg.png"  style="display: none;"/>
+
+    <p>Select operation type:</p>
+    <input type="radio" id="add" name="optype" value="add" checked> <label for="add">Addition</label><br>
+    <input type="radio" id="sub" name="optype" value="sub"> <label for="subtract">Subtraction</label>
 
 </body>
 </html>
