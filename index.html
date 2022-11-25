@@ -9,20 +9,23 @@
         width: 150px;
         display: block;
         text-align:right;
-        font-size: 24px; 
-        font-family: monospace;
+        font-size: 30px; 
+        font-family: Arial;
     }
     </style>
-<canvas id="myCanvas" width="200" height="132" style="border:1px solid #d3d3d3;">
+<canvas id="myCanvas" width="200" height="132">
 Your browser does not support the HTML5 canvas tag.</canvas>
 
 <script>
 var num1=0;
 var num2=0;
 var sum=0;
+
+
+
 function getRandom()
 {
-	return Math.floor(Math.random()*(999-100+1)+100);
+	return Math.floor(Math.random()*(9999-100+1)+1000);
 }
 function randomizeNumbers()
 {
@@ -45,13 +48,20 @@ function clearCanvas(ctx)
 
 function verify()
 {
+    drawInCanvas();
+    var correctImg = document.getElementById("correct");
+    var wrongImg = document.getElementById("wrong");
 	var tobeVerified=parseInt(document.getElementById("sum").value);
+    var ctx = get_canvas_ctx();
+    ctx.globalAlpha = 0.5;
 	if(tobeVerified==sum) {
-    	alert("Correct Answer");
-        newSum();
+        ctx.drawImage(correctImg, 0, 0,100,100);
+    	//alert("Correct Answer");
+        setTimeout(function(){/*YourCode*/newSum();},2000);       
     }
     else {
-    	alert('Wrong answer');
+        ctx.drawImage(wrongImg, 0, 0,100,100);
+    	//alert('Wrong answer');
     }
 }
 
@@ -62,10 +72,22 @@ e.setSelectionRange(0, 0);
 e.focus();
 }
 
+function get_canvas()
+{
+    return document.getElementById("myCanvas");
+}
+
+function get_canvas_ctx()
+{
+    var c = get_canvas();
+    return c.getContext("2d");
+}
+
 function drawInCanvas()
 {
   var c = document.getElementById("myCanvas");
   var ctx = c.getContext("2d");
+  ctx.globalAlpha = 1;
   clearCanvas(ctx);
   // Create a red line in position 150
   ctx.strokeStyle = "black";
@@ -95,5 +117,9 @@ document.getElementById("sum").focus();
 <input id='sum' onkeyup="move_cursor_to_left(this)" autofocus/><br>
 <button id='bNew' onclick="newSum()">New</button> 
 <button id='bVerify' onclick="verify()">Verify</button> 
+
+<img id="correct" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Eo_circle_green_checkmark.svg/240px-Eo_circle_green_checkmark.svg.png"  style="display: none;"/>
+<img id="wrong" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Flat_cross_icon.svg/240px-Flat_cross_icon.svg.png"  style="display: none;"/>
+
 </body>
 </html>
